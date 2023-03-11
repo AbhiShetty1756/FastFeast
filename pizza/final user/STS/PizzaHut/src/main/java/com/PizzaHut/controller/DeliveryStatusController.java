@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.PizzaHut.dto.DeliveryDto;
+import com.PizzaHut.dto.DeliveryStatUpdateDto;
 import com.PizzaHut.entities.DeliveryStatus;
 import com.PizzaHut.services.DeliveryStatusService;
 import com.app.custom_exceptions.ResourceNotFoundException;
@@ -85,9 +85,11 @@ public class DeliveryStatusController {
 	}
 	
 	@PutMapping("/dStatus/{deliveryId}")
-	public ResponseEntity<?> updateStatus(@PathVariable Integer deliveryId, @RequestBody String deliveryStatus){
+	public ResponseEntity<?> updateStatus(@PathVariable Integer deliveryId, @RequestBody DeliveryStatUpdateDto deliverystatus){
 		try {
-		String status=statusService.updateDeliveryStatus(deliveryId, deliveryStatus);
+		String status=statusService.updateDeliveryStatus(deliveryId, deliverystatus);
+		System.out.println(deliverystatus.getDeliverystatus());
+		System.out.println("deliveryid "+deliveryId);
 		return ResponseEntity.ok("Delivery status successfully updated");
 		}catch(ResourceNotFoundException e){
 			return ResponseEntity.notFound().build();

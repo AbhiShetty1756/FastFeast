@@ -16,4 +16,6 @@ public interface DeliveryStatusDao extends JpaRepository<DeliveryStatus	,Integer
             "LEFT JOIN FETCH ds.users " +
             "LEFT JOIN FETCH ds.address")
     List<DeliveryStatus> findAllDeliveryStatusWithDetails();
+	@Query(value="select * from DeliveryStatus where deliveryStatus != 'Delivered'",nativeQuery = true )
+	List<DeliveryStatus> findAllDeliveryStatus();
 }

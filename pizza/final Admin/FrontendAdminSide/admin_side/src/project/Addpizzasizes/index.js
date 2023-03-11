@@ -9,14 +9,14 @@ import Home from '../Home'
 // import Pizzaimage from '../pizzaimage'
 
 const  Addpizzasize = () => {
-    const {state} = useLocation()
-    const {itemid} = state
+    const location = useLocation()
+    // const {itemid} = state
 
-    const [itemId , setitemid]= useState("")
+    const [itemId , setitemid]= useState(location.state.itemid)
     const [size , setsize]= useState("")
     const [price , setprice]= useState("0.0")
     
-    const url = 'http://3.110.197.217:5000/item/latest'
+    const url = `${URL}item/latest`
      const [products, setProducts] = useState([])
  
     const navigate=useNavigate()
@@ -87,7 +87,7 @@ const  Addpizzasize = () => {
         {products.map((product) => {
             return (
               <p>
-                <p>enter the id below in item id: {itemid}</p>
+                <p>enter the id below in item id: {itemId}</p>
                 
                 
                 <ColoredLine color="black" />

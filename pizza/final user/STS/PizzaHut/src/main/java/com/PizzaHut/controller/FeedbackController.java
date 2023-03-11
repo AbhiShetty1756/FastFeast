@@ -18,7 +18,6 @@ import com.PizzaHut.entities.Feedback;
 import com.PizzaHut.services.FeedBackService;
 import com.app.custom_exceptions.ResourceNotFoundException;
 
-@Controller
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/feedback")

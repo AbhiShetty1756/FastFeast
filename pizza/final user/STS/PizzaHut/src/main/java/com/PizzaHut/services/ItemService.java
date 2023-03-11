@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.PizzaHut.dao.ItemDao;
+import com.PizzaHut.dao.ItemSizeDao;
 import com.PizzaHut.dto.ApiResponse;
 import com.PizzaHut.dto.ItemDto;
 import com.PizzaHut.entities.Item;
+import com.app.custom_exceptions.ResourceNotFoundException;
 
 @Service
 @Transactional
@@ -19,6 +21,8 @@ public class ItemService {
 	@Autowired
 	private ItemDao itemDao;
 	
+	@Autowired
+	private ItemSizeDao sizeDao;
 	
 	public Item addPizza(ItemDto pizzaDto) {
 		ModelMapper mapper=new ModelMapper();
@@ -46,5 +50,19 @@ public class ItemService {
 			return listBytype;
 		}
 		return null;
+	}
+
+	public String updateItem(Integer itemId, ItemDto itemDto) {
+		Item item= itemDao.findById(itemId).orElseThrow(()->new ResourceNotFoundException("No such item exists"));
+		item.setDescription(itemDto.getDescription());
+		item.setItemName(itemDto.getItemName());
+		item.setType(itemDto.getType());
+		return "updated successfully";
+	}
+
+	public String deleteItem(Integer itemId) {
+		sizeDao.deleteAllByItemId(itemId);
+		itemDao.deleteById(itemId);
+		return itemId+" deleted successfully";
 	}
 }

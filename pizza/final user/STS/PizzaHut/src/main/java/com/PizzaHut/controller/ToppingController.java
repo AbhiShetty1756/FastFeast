@@ -17,7 +17,6 @@ import com.PizzaHut.entities.Toppings;
 import com.PizzaHut.services.ToppingsService;
 
 @CrossOrigin(origins = "*")
-@Controller
 @RestController
 @RequestMapping("/toppings")
 public class ToppingController {

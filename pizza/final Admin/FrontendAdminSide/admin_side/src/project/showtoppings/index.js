@@ -7,30 +7,21 @@ import { useNavigate } from 'react-router-dom'
 
 
 const Showtoppings = () => {
-  const url = 'http://3.110.197.217:5000/toppings/toppingList'
-  const [products, setProducts] = useState([])
+  const url = `${URL}toppings/showAll`
+  const [topping, setToppings] = useState(null)
 
   const navigate=useNavigate()
 
   useEffect(() => {
-    getProducts()
+  axios.get(url).then((response) => {
+    const result = response.data
+    if (result['status'] == 'success') {
+      setToppings(result.data[0])
+    }
+  })
   }, [])
 
-  const getProducts = () => {
-    axios.get(url).then((response) => {
-      const result = response.data
-      if (result['status'] == 'success') {
-        setProducts(result['data'])
-        //  var person = result['data'];
-
-        // localStorage.setItem('person', JSON.stringify(person)); //stringify object and store
-        // var retrievedPerson = JSON.parse(localStorage.getItem('person')); //retrieve the object
-        // localStorage.removeItem("person")
-
-      }
-    })
-  }
- 
+  
   function deletetopping(toppingId){
     const url =`${URL}/toppings/delete/${toppingId}`
     axios.delete(url).then((response)=>{
@@ -48,32 +39,33 @@ const Showtoppings = () => {
         }}
     />
 );
-
+console.log(topping)
   return (
       <>
             <Home />
       
         <div className="outerdiv-emp-form">
           
-          {products.map((product) => {
-            return (
+          {/* {products.map((product) => {
+            return ( */}
+            {topping?(
               <p>
-                  <p><strong>Topping Name  :</strong> {product['toppingName']}</p>
-                 <p><strong>Topping Price :</strong> {product['price']}</p>
+                  <p><strong>Topping Name  :</strong> {topping['toppingName']}</p>
+                 <p><strong>Topping Price :</strong> {topping['price']}</p>
                  
                 <div className='update'>
               
-              <button type="button" onClick={()=>(navigate('/edittoppings',{state:{toppingId:product['toppingId']}}))} class="btn btn-sm btn-success">Update</button>   
-              <button onClick={()=>deletetopping(product['toppingId'])} class="btn btn-danger mx-3">delete</button>        
+              <button type="button" onClick={()=>(navigate('/edittoppings',{state:{toppingId:topping['toppingId']}}))} class="btn btn-sm btn-success">Update</button>   
+              <button onClick={()=>deletetopping(topping['toppingId'])} class="btn btn-danger mx-3">delete</button>        
               {/* <button onClick={()=>deletesize(product['itemId'])} class="btn btn-danger mx-3">delete</button> */}
               </div>
   
                 <ColoredLine color="black" />
                 </p>
                
-
-            )
-          })}
+               ):(<h2>loading</h2>)}
+            {/* )
+          })} */}
       </div>
      
    

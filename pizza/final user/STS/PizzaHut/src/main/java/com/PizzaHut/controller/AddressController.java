@@ -20,7 +20,6 @@ import com.PizzaHut.entities.Address;
 import com.PizzaHut.services.AddressService;
 
 @CrossOrigin(origins = "*")
-@Controller
 @RestController
 @RequestMapping("/address")
 public class AddressController {

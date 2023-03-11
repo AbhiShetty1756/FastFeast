@@ -7,12 +7,11 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 
 const Showallpizza = () => {
-  const url = 'http://3.110.197.217:5000/item/showAll'
+  const url = `${URL}item/showAll`
   const [products, setProducts] = useState([])
 const navigate=useNavigate()
 
 const location = useLocation();
-  console.log(location);
 
   useEffect(() => {
     getProducts()
@@ -43,13 +42,13 @@ const location = useLocation();
     />
 );
 function deletesize(itemId){
-  const url =`${URL}/item/delete/${itemId}`
+  const url =`${URL}item/delete/${itemId}`
   axios.delete(url).then((response)=>{
-    window.location.reload(false);
+    getProducts()
 
   })
 }
-
+console.log(products)
   return (
       <>
             <Home />
@@ -60,7 +59,7 @@ function deletesize(itemId){
             return (
               <p>
                 
-                <p><b>ID :</b> {product['itemId']}</p>
+                <p><b>ID :</b> {product.itemid}</p>
                 
                 <p><strong>Pizza Type :</strong> {product['type']}</p>
                  <p><strong>Pizza Name :</strong> {product['itemName']}</p>
@@ -68,8 +67,8 @@ function deletesize(itemId){
              
                 <div className='update'>
               
-                <button type="button" onClick={()=>(navigate('/editpizza',{state:{itemId:product['itemId']}}))} class="btn btn-sm btn-success">Update</button>           
-                <button onClick={()=>deletesize(product['itemId'])} class="btn btn-danger mx-3">delete</button>
+                <button type="button" onClick={()=>(navigate('/editpizza',{state:{itemId:product.itemid}}))} class="btn btn-sm btn-success">Update</button>           
+                <button onClick={()=>deletesize(product['itemid'])} class="btn btn-danger mx-3">delete</button>
                 </div>
 
                 <ColoredLine color="black" />

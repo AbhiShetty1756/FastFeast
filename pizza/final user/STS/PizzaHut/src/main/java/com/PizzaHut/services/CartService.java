@@ -64,13 +64,13 @@ public class CartService {
 	
 	// get by delivery id
 	public Cart fetchByDeliveryid(Integer deliveryId) {
-//		DeliveryStatus delstat=deliveryDao.findById(deliveryId).orElseThrow(()-> new ResourceNotFoundException("invalid delivery id"));
-//		System.out.println(delstat);
-//		Cart cartById = cartDao.findByDelId(deliveryId);
+		DeliveryStatus delstat=deliveryDao.findById(deliveryId).orElseThrow(()-> new ResourceNotFoundException("invalid delivery id"));
+		System.out.println(delstat);
+		Cart cartById = cartDao.findByDeliveryId(delstat);
 		
-//		if (cartById!=null) {
-//			return cartById;
-//		}
+		if (cartById!=null) {
+			return cartById;
+		}
 		
 		return null;
 	}

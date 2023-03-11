@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +50,7 @@ public class ItemController {
 	}
 
 	// get item by itemId
-	@GetMapping("/byid/{itemId}")
+	@GetMapping("/getbyid/{itemId}")
 	public ResponseEntity<?> findByItemId(@PathVariable("itemId") int itemId) {
 		try {
 			System.out.println("In controller");
@@ -76,7 +78,31 @@ public class ItemController {
 		}
 	}
 	
+	@PutMapping("/updateItem/{itemId}")
+	public ResponseEntity<?> updateItem(@PathVariable Integer itemId, @RequestBody ItemDto itemDto){
+		try {
+			System.out.println("in updateItem/{itemId}");
+			String updateStatus=itemService.updateItem(itemId, itemDto);
+			if (updateStatus == null)
+				return Response.error("No result found");
+			return Response.success(updateStatus);
+		}catch(Exception e) {
+			return Response.error(e.getMessage());
+		}
+	}
 	
+	@DeleteMapping("/delete/{itemId}")
+	public ResponseEntity<?> deleteItemById(@PathVariable Integer itemId) {
+		try {
+			System.out.println("in /delete/${itemId}");
+			String deleteStatus=itemService.deleteItem(itemId);
+			if (deleteStatus == null)
+				return Response.error("No result found");
+			return Response.success(deleteStatus);
+		}catch(Exception e) {
+			return Response.error(e.getMessage());
+		}
+	}
 	
 	
 	

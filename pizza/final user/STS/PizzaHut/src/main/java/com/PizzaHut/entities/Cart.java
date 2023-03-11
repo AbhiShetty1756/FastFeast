@@ -1,4 +1,4 @@
-package com.PizzaHut.entities;
+	package com.PizzaHut.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

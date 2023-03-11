@@ -22,7 +22,6 @@ import com.PizzaHut.services.UserService;
 @CrossOrigin(origins = "*")
 @RequestMapping("/user")
 @RestController
-@Controller
 public class UserController {
 	@Autowired
 	private UserService userService;

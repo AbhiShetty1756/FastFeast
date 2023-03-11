@@ -11,32 +11,32 @@ import { Placeholder } from 'react-bootstrap'
 
 
 const Editpizza = () => {
-    const {state} = useLocation()
-    const {itemId} = state
+    // const location = useLocation()
+    // const {itemId} = state
     
-    const [products, setProducts] = useState([])
+    const [pizza, setPizza] = useState(null)
     const [pizzasize, setPizzasize] = useState([])
 
     const [type,settype]=useState('')
     const [itemName,setitemName]=useState('')
     const [description,setDescription]=useState('')
-
+    const [itemId, setItemId] = useState(null);
     const navigate=useNavigate()
     const location = useLocation();
   console.log(location);
 
     useEffect(() => {
         settype(type)
+        setItemId(location.state.itemId)
+        console.log("locationi "+location.state.itemId)
+        console.log(itemId)
         setitemName(itemName)
         setDescription(description)
-        getProducts()
-        getSize()
-    },[])
+        // getProducts()
+        // getSize()
+    },[itemId])
 
-    
-
-      
-  
+     
     const save = () => {
         if (type.length == 0) {
             toast.warning('please enter pizza type')
@@ -52,9 +52,9 @@ const Editpizza = () => {
             }
 
            
-                
+              
              
-          const url =`${URL}/item/updateItem/${itemId}`
+          const url =`${URL}item/updateItem/${itemId}`
             axios.put(url,body).then((response) => {
                 const result =response.data
                 if(result['status']=='success'){
@@ -66,21 +66,20 @@ const Editpizza = () => {
             })
         }
     }
-  
-    
       const getProducts = () => {
-        const url=`${URL}/item/getbyid/${itemId}`
+        console.log(itemId)
+        const url=`${URL}item/getbyid/${itemId}`
         axios.get(url).then((response) => {
           const result = response.data
           if (result['status'] == 'success') {
-            setProducts(result['data'])
+            setPizza(result['data'])
            
           }
         })
       }
 
       const getSize=()=>{
-        const url = `${URL}/itemSize/itemsizeId/${itemId}`
+        const url = `${URL}itemSize/itemsizeId/${itemId}`
              axios.get(url).then((response)=>{
                 const result = response.data
                 console.log(result)
@@ -91,23 +90,34 @@ const Editpizza = () => {
                 }
             })
       }
-      function deletesize(sizeId){
-        const url =`${URL}/itemSize/delete/${sizeId}`
-        axios.delete(url).then((response)=>{
-          window.location.reload(false);
+      // function deletesize(sizeId){
+      //   const url =`${URL}itemSize/delete/${sizeId}`
+      //   axios.delete(url).then((response)=>{
+      //     window.location.reload(false);
     
-        })
-      }
+      //   })
+      // }
     
+      useEffect(() => {
+        if (itemId) {
+          getProducts();
+          // getSize();
+        } else {
+          console.log(itemId);
+        }
+      }, [itemId]);
       
       return (
-        <><div>
+        
+        <>
+        <div>
           <Home />
-        </div><div className='edit'>
+        </div ><div className='edit'>
         <h2 className="title"><b>Update Pizza</b></h2>
-            {products.map((product) => {
-                    return (        
-            <div className="form">
+            {/* {products.map((product) => { */}
+                    {/* return (         */}
+            {pizza?(
+            <div className="form" >
               <div className="mb-3">
                 <label htmlFor="" className="label-control">
                   Pizza Type     :
@@ -129,7 +139,7 @@ const Editpizza = () => {
                     setitemName(e.target.value)
                   } }
                   type="text"
-                  className="form-control" placeholder= {product['itemName']} />
+                  className="form-control" placeholder= {pizza['itemName']} />
               </div>
       
               <div className="mb-3">
@@ -142,14 +152,14 @@ const Editpizza = () => {
                     setDescription(e.target.value)
                   } }
       
-                  className="form-control"  placeholder={product['description']} />
+                  className="form-control"  placeholder={pizza['description']} />
               </div>
       
               <div className="mb-3">
                 <button onClick={save} className="btn btn-success" >
                   Save Pizza
                 </button>
-                <button  onClick={()=>(navigate('/Addpizzasizes',{state:{itemid:product['itemId']}}))} className="btn btn-primary mx-3 ">Add pizzasize</button>
+                <button  onClick={()=>(navigate ('/Addpizzasize',{state:{pizza}}))} className="btn btn-primary mx-3 ">Add pizzasize</button>
                 <Link to="/home" className="btn btn-danger float-end">
                   Cancel
                 </Link>
@@ -157,7 +167,7 @@ const Editpizza = () => {
                <div>
               
               <br />
-      <table class="table table-dark">
+      {/* <table className="table table-dark">
         <thead>
           <tr>
             
@@ -176,18 +186,20 @@ const Editpizza = () => {
                 <td>{size['size']}</td>
                 <td>{size['price']}</td>
                 <td><button  onClick={()=>(navigate('/editpizzasize',{state:{sizeId:size['sizeId']}}))} className="btn btn-primary mx-3 ">Update pizzasize</button></td>
-                <td><button onClick={()=>deletesize(size['sizeId'])} class="btn btn-danger">delete</button></td>
+                <td><button onClick={()=>deletesize(size['sizeId'])} className="btn btn-danger">delete</button></td>
               </tr>
             )
           })}
         </tbody>
-      </table>
+      </table> */}
     
                </div>
               </div>
             </div>
-            )
-          })}             
+            ):(<h2>loading</h2>)}
+            {/* ) */}
+          {/* })}              */}
+
             </div>
             </>
           

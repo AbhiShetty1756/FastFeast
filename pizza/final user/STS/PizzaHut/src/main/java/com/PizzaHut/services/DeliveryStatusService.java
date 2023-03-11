@@ -1,6 +1,5 @@
 package com.PizzaHut.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.PizzaHut.dao.AddressDao;
+import com.PizzaHut.dao.CartDao;
 import com.PizzaHut.dao.DeliveryStatusDao;
 import com.PizzaHut.dto.DeliveryDto;
-import com.PizzaHut.dto.DeliveryStatusDto;
+import com.PizzaHut.dto.DeliveryStatUpdateDto;
 import com.PizzaHut.dto.DtoEntityConvertor;
 import com.PizzaHut.dto.PaymentDto;
 import com.PizzaHut.entities.Address;
@@ -31,6 +31,8 @@ public class DeliveryStatusService {
 	private CartService cartService;
 	@Autowired 
 	private AddressDao addrDao;
+	@Autowired
+	private CartDao cartDao;
 	@Autowired
 	private DeliveryStatusDao deliveryStatusDao;
 
@@ -66,9 +68,14 @@ public class DeliveryStatusService {
 		return deliveryStatus;
 	}
 	
-	public String updateDeliveryStatus(Integer deliveryId,String deliveryStatus) {
+	public String updateDeliveryStatus(Integer deliveryId,DeliveryStatUpdateDto deliveryStatus) {
 			DeliveryStatus delivery=statusDao.findById(deliveryId).orElseThrow(() -> new ResourceNotFoundException("InValid pizza Id !!!!!"));
-			delivery.setDeliveryStatus(deliveryStatus);
+			
+			delivery.setDeliveryStatus(deliveryStatus.getDeliverystatus());
+			if(deliveryStatus.getDeliverystatus().equals("Delivered")) {
+				System.out.println("hello");
+				cartDao.deleteByDeliveryId(deliveryId);
+			}
 			return "success";
 	}
 	
@@ -93,7 +100,7 @@ public class DeliveryStatusService {
 //	}
 	
 	public List<DeliveryStatus> getAllDeliveryStatus() {
-		return deliveryStatusDao.findAll();
+		return deliveryStatusDao.findAllDeliveryStatus();
 	}
 
 }

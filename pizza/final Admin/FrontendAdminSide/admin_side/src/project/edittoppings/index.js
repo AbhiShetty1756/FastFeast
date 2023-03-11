@@ -15,7 +15,6 @@ const Edittoppings = () => {
     const {toppingId} = state
     
     const [products, setProducts] = useState([])
-    const [pizzasize, setPizzasize] = useState([])
 
     const [toppingName,setToppingName]=useState('')
     const [price,setPrice]=useState('')

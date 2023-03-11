@@ -7,11 +7,6 @@ import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
 
 const Home = () => {
-
-  
-  
-
-  
     
 return(
     

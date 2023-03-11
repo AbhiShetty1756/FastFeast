@@ -13,34 +13,51 @@ const Changestatus = () => {
     const deliveryid=location.state.deliveryid
     const [deliverystatus,setDeliverystatus] = useState("")
     
-  const [products, setProducts] = useState([]);
+  const [product, setProducts] = useState();
   const navigate = useNavigate();
 
-  useEffect(() => {
-
-    getProducts();
-  },[]);
-
-  
-
-
-  const getProducts = () => {
-    // setDeliveryId(location.state.deliveryid)
+  // const getProducts = () => {
+  //   // setDeliveryId(location.state.deliveryid)
     
-    console.log("delivery id:"+ deliveryid)
-    const url = `${URL}cart/deliveryid/${deliveryid}`
-    axios.get(url).then((response) => {
-      const result = response.data;
-      console.log(result);
-      if (result["status"] == "success") {
-        setProducts(result["data"]);
-        console.log(products)
-      }
-      else{
-        console.log("error")
-      }
-    });
-  };
+  //   console.log("delivery id:"+ deliveryid)
+  //   const url = `${URL}cart/deliveryid/${deliveryid}`
+  //   axios.get(url).then((response) => {
+  //     const result = response.data;
+  //     console.log(result)
+  //     if (result["status"] === "success") {
+  //       setProducts(result["data"]);
+  //       console.log("products"+product.data)
+  //     }
+  //     else{
+  //       console.log("error")
+  //     }
+  //   });
+  // }
+
+  // useEffect(() => {
+
+  //   getProducts();
+  //   console.log(product)
+    
+  // },[]);
+
+  // console.log("products outside"+ product);
+  useEffect(() => {
+    console.log("in useEffect")
+    console.log(deliveryid)
+    const url = `${URL}cart/deliveryid/${deliveryid}`;
+  axios.get(url).then((response) => {
+    const result = response.data;
+    console.log(result);
+    if (result["status"] === "success") {
+      console.log(result.data)
+      setProducts(result.data);
+      console.log("products"+ product);
+    } else {
+      console.log("error");
+    }
+  });
+  }, []);
 
   const ColoredLine = ({ color }) => (
     <hr
@@ -59,14 +76,13 @@ const Changestatus = () => {
      
       else{
           const body = {
-            deliverystatus,
-             
-              
+            deliverystatus
           }
-          const url = `${URL}/deliveryStatus/dStatus/${deliveryId}`
-          
-          
-          axios.post(url,body).then((response)=> {
+          console.log(deliverystatus)
+          const url = `${URL}DeliveryStatus/dStatus/${deliveryid}`
+          // http://localhost:7070/DeliveryStatus/dStatus/1
+          // http://localhost:7070/DeliveryStatus/dStatus/1
+          axios.put(url,body).then((response)=> {
               const result = response.data
               console.log(result)
               if(result['status']=='success'){
@@ -77,10 +93,6 @@ const Changestatus = () => {
                   toast.error(result['error'])
               }
           })
-
-          
- 
-         
         }
       }
 
@@ -90,11 +102,12 @@ const Changestatus = () => {
 
       <div className="outerdiv-emp-form">
           <h1> Orders Details </h1>
-          {deliveryId}
-          <hr></hr>
-        {products.map((product) => {
-          return (
-            <p>
+          {/* {deliveryId} */}
+          <hr/>
+        {/* {products.map((product) => { */}
+          {/* return ( */}
+          {product?(
+            <p >
               <div className="row">
                 <div className="col">
                   <p>
@@ -133,9 +146,9 @@ const Changestatus = () => {
              
               
               <ColoredLine color="black" />
-            </p>
-          );
-        })}
+            </p>):(<h1>loading</h1>)}
+          {/* );
+         })}  */}
       </div>
     </>
   );

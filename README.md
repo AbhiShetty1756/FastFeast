@@ -14,7 +14,8 @@ ________________________________________
 Objective (Purpose):
 
 The objective or purpose of a pizza delivery project is to provide a convenient and efficient way for customers to order and receive pizza delivery. The project should aim to Simplify the ordering process: The project should provide an easy-to-use interface that allows customers to quickly order pizzas, select toppings, and make other customizations.Streamline the delivery process: The project should provide real-time updates on delivery status and estimated delivery times, as well as options for customers to track their orders and communicate with delivery personnel.
-Ensure secure and reliable payment processing: The project should provide a secure and reliable payment processing system that accepts various forms of payment, including credit cards and cash on delivery.Provide a positive customer experience: The project should aim to provide a positive customer experience by ensuring fast and efficient delivery, accurate order fulfillment, and responsive customer support________________________________________
+Ensure secure and reliable payment processing: The project should provide a secure and reliable payment processing system that accepts various forms of payment, including credit cards and cash on delivery.Provide a positive customer experience: The project should aim to provide a positive customer experience by ensuring fast and efficient delivery, accurate order fulfillment, and responsive customer support
+________________________________________
 
 Scope:
 The project could involve setting up an online ordering system, developing a Web app for customers, integrating with a payment gateway, and implementing a tracking system for orders and setting up a customer service hotline, implementing a feedback system, and resolving customer complaints.
@@ -36,11 +37,13 @@ ________________________________________
 ________________________________________
 
 • Validate user delivery addresses to ensure accurate delivery location and avoid errors.
+
 ➢ Payment integration:
 ________________________________________
 The app should allow users to pay for their orders within the app using various payment methods, such as credit/debit cards, PayPal, or Apple Pay
 
-➢ Feedback and rating system ________________________________________
+➢ Feedback and rating system
+________________________________________
 
 The app should allow users to rate their experience and provide feedback on the quality of the pizza, delivery time, and overall service.
 
